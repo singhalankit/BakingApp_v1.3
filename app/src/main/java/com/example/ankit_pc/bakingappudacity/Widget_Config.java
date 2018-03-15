@@ -95,12 +95,12 @@ public class Widget_Config extends AppCompatActivity {
 
 
 
-            Intent result = new Intent(getApplication().getApplicationContext(), RecipeWidgetService.class);
+            Intent result = new Intent(getApplication().getApplicationContext(), RecipeWidget.class);
             result.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
             // since it seems the onUpdate() is only fired on that:
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(getApplication());
-            int[] ids = widgetManager.getAppWidgetIds(new ComponentName(getApplication(), RecipeWidgetService.class));
+            int[] ids = widgetManager.getAppWidgetIds(new ComponentName(getApplication(), RecipeWidget.class));
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 widgetManager.notifyAppWidgetViewDataChanged(ids, android.R.id.list);

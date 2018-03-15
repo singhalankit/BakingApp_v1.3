@@ -26,6 +26,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     private Recipe recipe;
     private ArrayList<Recipe> recipes;
     private boolean isTwoPane;
+    private OnClickRecyclerView onClickRecyclerView;
 
 
     public RecipeStepsAdapter(Recipe recipe, ArrayList<Recipe> recipes, boolean isTwoPane) {
@@ -64,14 +65,16 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             public void onClick(View v) {
                 Context context =   v.getContext();
                 if (isTwoPane) {
-                    Bundle arguments = new Bundle();
+
+                    onClickRecyclerView.onItemClick(holder.step);
+                    /*Bundle arguments = new Bundle();
                     arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, holder.step);
                     arguments.putBoolean("pane",isTwoPane);
                     RecipeStepDetailFragment fragment = new RecipeStepDetailFragment();
                     fragment.setArguments(arguments);
                     ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.recipe_step_detail_container, fragment)
-                            .commit();
+                            .commit();*/
                 } else {
                     Intent intent = new Intent(context, RecipeStepDetailActivity.class);
                     intent.putExtra(RecipeStepDetailFragment.ARG_STEP, holder.step);

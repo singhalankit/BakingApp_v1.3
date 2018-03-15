@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.AdapterView;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -28,13 +29,14 @@ import butterknife.ButterKnife;
  * Created by ANKIT_PC on 06-03-2018.
  */
 
-public class RecipeStepListActivity extends AppCompatActivity {
+public class RecipeStepListActivity extends AppCompatActivity implements OnClickRecyclerView {
 
     public final static String TAG_RECIPE = "recipe";
     private boolean isTwoPane;
     private Recipe recipe;
+    private RecipeStep recipeStep;
     private ArrayList<Recipe> recipes;
-    Context mContext;
+    Context mContext = getApplication();
 
     @BindView(R.id.include_recipe_step_list) RecyclerView recyclerView;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -80,8 +82,6 @@ public class RecipeStepListActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
 
@@ -121,6 +121,33 @@ public class RecipeStepListActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(RecipeStep step) {
+        recipeStep = step;
+        Bundle arguments = new Bundle();
+        arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
+        arguments.putBoolean("pane",isTwoPane);
+        RecipeStepDetailFragment fragment = new RecipeStepDetailFragment();
+        fragment.setArguments(arguments);
+        ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction()
+                .replace(R.id.recipe_step_detail_container, fragment)
+                .commit();
+    }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            Intent intent = new Intent(mContext, RecipeStepDetailActivity.class);
+            intent.putExtra(RecipeStepDetailFragment.ARG_STEP, recipeStep);
+            intent.putExtra(RecipeStepListActivity.TAG_RECIPE, recipe);
+            intent.putParcelableArrayListExtra(RecipesMainFragment.TAG_RECIPES,recipes);
+            mContext.startActivity(intent);
+
+        }
+        }
 
 }
