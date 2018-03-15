@@ -65,9 +65,10 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             @Override
             public void onClick(View v) {
                 Context context =   v.getContext();
+                onClickRecyclerView = (OnClickRecyclerView) context;
                 if (isTwoPane) {
 
-                    onClickRecyclerView.onItemClick(holder.step);
+                    onClickRecyclerView.onItemClick(holder.step,context);
                     /*Bundle arguments = new Bundle();
                     arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, holder.step);
                     arguments.putBoolean("pane",isTwoPane);

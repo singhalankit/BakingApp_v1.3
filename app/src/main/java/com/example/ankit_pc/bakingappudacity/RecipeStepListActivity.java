@@ -123,8 +123,9 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
 
 
     @Override
-    public void onItemClick(RecipeStep step) {
+    public void onItemClick(RecipeStep step, Context clickContext) {
         recipeStep = step;
+        mContext = clickContext;
         Bundle arguments = new Bundle();
         arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
         arguments.putBoolean("pane",isTwoPane);
