@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="textSize">22sp</dimen>
+    <dimen name="text_margin">8dp</dimen>
+    <dimen name="button_margin">10dp</dimen>
+
+    <dimen name="cardMargin">8dp</dimen>
+    <dimen name="cardRadius">4dp</dimen>
+    <dimen name="cardSize">180dp</dimen>
+
+    <dimen name="textWidgetSize">16sp</dimen>
+    <dimen name="cardWidgetMargin">5dp</dimen>
+    <dimen name="cardWidgetSize">50dp</dimen>
+
+    <dimen name="app_bar_height">150dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+</resources>

@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/recipe_widget_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"/>
+
+    <TextView
+        android:id="@+id/recipes_empty_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textWidgetSize"
+        android:text="@string/error_recipes"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
