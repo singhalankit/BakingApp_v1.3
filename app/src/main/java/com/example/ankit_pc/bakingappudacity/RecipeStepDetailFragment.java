@@ -75,8 +75,14 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE  && ! mTwoPane)
+        {
+            stepDesc.setVisibility(View.GONE);
 
-        if (savedInstanceState != null){
+        }
+
+
+            if (savedInstanceState != null){
         currentPosition = savedInstanceState.getLong("current");}
         fillUI(rootView);
         return rootView;
@@ -103,11 +109,13 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                     stepVideoPlayer.setVisibility(View.GONE);
                 String thumbnail = step.getThumbnailURL();
                 if(!thumbnail.isEmpty()){
-                    stepThumbnail.setVisibility(View.VISIBLE);
-                    Glide.with(getActivity())
+                    stepThumbnail.setVisibility(View.GONE);
+                    stepDesc.setVisibility(View.VISIBLE);
+                    stepDesc.setText(step.getDescription());
+                    /*Glide.with(getActivity())
                             .load(thumbnail)
                             .placeholder(R.drawable.ic_load)
-                            .into(stepThumbnail);
+                            .into(stepThumbnail);*/
                 }
             }
         }

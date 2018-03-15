@@ -33,6 +33,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
     ArrayList<Recipe> mRecipes = new ArrayList<Recipe>();
     RecipeIngredient recipeIngredient;
     Recipe mrecipe;
+    Recipe selectedRecipe;
     RecipeRemoteViewsFactory(Context context){
         this.mContext = context;
     }
@@ -51,6 +52,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
     @Override
     public void onDataSetChanged() {
 
+
         SharedPreferences sp = mContext.getSharedPreferences("MyPref",Context.MODE_PRIVATE);
 
         FetchWidgetRecipeData recipeData = new FetchWidgetRecipeData();
@@ -62,6 +64,7 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
             e.printStackTrace();
         }
 
+
         for (int i=0;i<mRecipes.size();i++)
         {
 
@@ -69,7 +72,8 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
             if(mrecipe.getName().equals(sp.getString("recipe_name","Nutella Pie")))
             {
 
-                recipeIngredient = mrecipe.getIngredients()[i];
+                recipeIngredient = mRecipes.get(i).getIngredients()[i];
+                selectedRecipe = mRecipes.get(i);
             }
         }
 
@@ -84,15 +88,15 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
     @Override
     public int getCount() {
         if (recipeIngredient != null)
-            return mrecipe.getIngredients().length;
+            return selectedRecipe.getIngredients().length;
         else
             return 0;
     }
 
     @Override
-    public RemoteViews getViewAt(int i) {
+    public RemoteViews getViewAt(int j) {
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.widget_ingredients_adapter);
-        RecipeIngredient ri = mrecipe.getIngredients()[i];
+        RecipeIngredient ri = selectedRecipe.getIngredients()[j];
         //Recipe recipe = mRecipes.get(i);
         rv.setTextViewText(R.id.widgetNutrient,ri.getIngredient());
         rv.setTextViewText(R.id.widgetQuantity,ri.getQuantity());
@@ -126,8 +130,8 @@ class RecipeRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public long getItemId(int j) {
+        return j;
     }
 
     @Override

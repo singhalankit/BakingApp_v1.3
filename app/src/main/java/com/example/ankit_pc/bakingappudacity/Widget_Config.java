@@ -112,15 +112,15 @@ public class Widget_Config extends AppCompatActivity {
 
 //Create the return intent//
 
-         //   Intent resultValue = new Intent();
+            Intent resultValue = new Intent();
 
 //Pass the original appWidgetId//
 
-           // resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
 //Set the results from the configuration Activity//
 
-//            setResult(RESULT_OK, resultValue);
+            setResult(RESULT_OK, resultValue);
 
 //Finish the Activity//
 

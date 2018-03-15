@@ -46,8 +46,8 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPref",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+       // SharedPreferences sharedPreferences = getSharedPreferences("MyPref",MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sharedPreferences.edit();
 
         setContentView(R.layout.activity_recipe_step_list);
         ButterKnife.bind(this);
@@ -70,13 +70,13 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
 
         if (savedInstanceState != null) {
             recipe = savedInstanceState.getParcelable(TAG_RECIPE);
-            editor.putString("recipe_name",recipe.getName());
-            editor.commit();
+           // editor.putString("recipe_name",recipe.getName());
+            //editor.commit();
             setupRecyclerView(recyclerView);
         } else if (intent.hasExtra(TAG_RECIPE)) {
             recipe = intent.getParcelableExtra(TAG_RECIPE);
-            editor.putString("recipe_name",recipe.getName());
-            editor.commit();
+            //editor.putString("recipe_name",recipe.getName());
+            //editor.commit();
             setupRecyclerView(recyclerView);
         }
 
@@ -150,6 +150,12 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
             mContext.startActivity(intent);
 
         }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            isTwoPane = true;
+        }
+
         }
 
 }

@@ -80,11 +80,11 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }
 
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !step.getVideoURL().isEmpty()) {
+        /*if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ) {
 
             prevButton.setVisibility(View.GONE);
             nextButton.setVisibility(View.GONE);
-        }
+        }*/
             //     startFullscreen(currentPosition);
         //} else {
             checkPrevNext();
@@ -95,7 +95,25 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
 
     }
 
-   /* private void startFullscreen(long position){
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+            prevButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.GONE);
+        }
+
+        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+
+            prevButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+    /* private void startFullscreen(long position){
       //  Intent intent = new Intent(this, FullscreenPlayerActivity.class);
        // intent.putExtra(RecipeStepListActivity.TAG_RECIPE, recipe);
         //intent.putExtra(RecipeStepDetailFragment.ARG_STEP, step);
