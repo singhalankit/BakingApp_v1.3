@@ -38,6 +38,7 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
     private ArrayList<Recipe> recipes;
     Context mContext = getApplication();
 
+
     @BindView(R.id.include_recipe_step_list) RecyclerView recyclerView;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
@@ -104,7 +105,7 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
         RecyclerView.LayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(new RecipeStepsAdapter(recipe, recipes, isTwoPane));
+        recyclerView.setAdapter(new RecipeStepsAdapter(recipe, recipes, isTwoPane,mContext));
     }
 
 

@@ -29,10 +29,11 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     private OnClickRecyclerView onClickRecyclerView;
 
 
-    public RecipeStepsAdapter(Recipe recipe, ArrayList<Recipe> recipes, boolean isTwoPane) {
+    public RecipeStepsAdapter(Recipe recipe, ArrayList<Recipe> recipes, boolean isTwoPane, Context context) {
         this.recipe = recipe;
         this.recipes = recipes;
         this.isTwoPane = isTwoPane;
+        this.onClickRecyclerView = (OnClickRecyclerView) context;
     }
 
     class StepsViewHolder extends RecyclerView.ViewHolder {
