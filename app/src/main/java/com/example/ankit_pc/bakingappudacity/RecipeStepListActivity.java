@@ -138,7 +138,7 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
     }
 
 
-    @Override
+   /* @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -162,11 +162,11 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
         }
 
 
-        /*if ((newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) && mContext == null)
+        *//*if ((newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) && mContext == null)
 
         {
             onCreate(null);
+        }*//*
         }*/
-        }
 
 }

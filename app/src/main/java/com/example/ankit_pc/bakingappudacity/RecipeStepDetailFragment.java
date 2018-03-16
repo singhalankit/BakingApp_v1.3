@@ -34,7 +34,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     ImageView stepThumbnail;
     @BindView(R.id.step_video)
     SimpleExoPlayerView stepVideoPlayer;
-    Long currentPosition;
+    long currentPosition=00;
     boolean mTwoPane;
 
 
@@ -48,13 +48,16 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
 
         currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
         outState.putLong("current",currentPosition);
+        outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
-        currentPosition = savedInstanceState.getLong("current");}
+        currentPosition = savedInstanceState.getLong("current");
+        step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);}
 
         if (getArguments().containsKey(ARG_STEP)) {
             step = getArguments().getParcelable(ARG_STEP);
@@ -71,10 +74,11 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         View rootView = inflater.inflate(R.layout.recipe_step_detail_fragment, container, false);
         ButterKnife.bind(this,rootView);
 
+        if (savedInstanceState != null){
+            currentPosition = savedInstanceState.getLong("current");}
+
         if (mTwoPane ) {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
-
-
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE  && ! mTwoPane)
@@ -84,13 +88,12 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
 
 
-            if (savedInstanceState != null){
-        currentPosition = savedInstanceState.getLong("current");}
-        fillUI(rootView);
+
+        fillUI(rootView,currentPosition);
         return rootView;
     }
 
-    private void fillUI(View view){
+    private void fillUI(View view, long position){
         if (step != null) {
             stepDesc.setText(step.getDescription());
             if(step.getVideoURL() != null && stepVideoPlayer != null){
@@ -104,7 +107,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                     stepVideoPlayer.setVisibility(View.VISIBLE);
                     if(ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
                         stepVideoPlayer.setPlayer(ExoPlayerVideoHandler.getInstance().getPlayer());
-
+                        //ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
                     }
                     else {
                         ExoPlayerVideoHandler.getInstance()
