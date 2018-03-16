@@ -44,6 +44,12 @@ public class MainActivityTest3 {
                                         0),
                                 1),
                         isDisplayed()));
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatTextView.perform(click());
 
         ViewInteraction recyclerView = onView(
@@ -51,9 +57,14 @@ public class MainActivityTest3 {
                         childAtPosition(
                                 withId(R.id.frameLayout),
                                 0)));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction appCompatImageButton = onView(
+        /*ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.exo_play), withContentDescription("Play"),
                         childAtPosition(
                                 childAtPosition(
@@ -61,7 +72,12 @@ public class MainActivityTest3 {
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatImageButton.perform(click());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        appCompatImageButton.perform(click());*/
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.nextButton), withText("Next Step"),
@@ -71,6 +87,11 @@ public class MainActivityTest3 {
                                         1),
                                 1),
                         isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatButton.perform(click());
 
         ViewInteraction appCompatButton2 = onView(
@@ -81,6 +102,11 @@ public class MainActivityTest3 {
                                         1),
                                 1),
                         isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatButton2.perform(click());
 
         ViewInteraction appCompatButton3 = onView(
@@ -91,6 +117,11 @@ public class MainActivityTest3 {
                                         1),
                                 1),
                         isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatButton3.perform(click());
 
         ViewInteraction appCompatImageButton2 = onView(
@@ -102,6 +133,11 @@ public class MainActivityTest3 {
                                                 0)),
                                 1),
                         isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatImageButton2.perform(click());
 
         ViewInteraction appCompatImageButton3 = onView(
@@ -113,6 +149,11 @@ public class MainActivityTest3 {
                                                 0)),
                                 1),
                         isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         appCompatImageButton3.perform(click());
 
     }

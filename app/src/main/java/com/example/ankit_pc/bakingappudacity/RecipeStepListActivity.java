@@ -162,11 +162,11 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
         }
 
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+        /*if ((newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) && mContext == null)
 
         {
             onCreate(null);
-        }
+        }*/
         }
 
 }
