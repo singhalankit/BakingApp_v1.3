@@ -84,4 +84,11 @@ public class ExoPlayerVideoHandler {
             player.setPlayWhenReady(isPlayerPlaying);
         }
     }
+
+    public void play() {
+        if(player != null){
+            player.setPlayWhenReady(true);
+        }
+    }
+
 }

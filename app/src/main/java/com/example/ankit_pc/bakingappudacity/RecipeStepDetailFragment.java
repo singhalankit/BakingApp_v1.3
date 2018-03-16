@@ -67,6 +67,9 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                 appBarLayout.setTitle(step.getShortDescription());
             }
         }
+
+        ExoPlayerVideoHandler.getInstance().play();
+
     }
 
     @Override
@@ -86,7 +89,6 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
             stepDesc.setVisibility(View.GONE);
 
         }
-
 
 
         fillUI(rootView,currentPosition);
@@ -113,8 +115,9 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                         ExoPlayerVideoHandler.getInstance()
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
+                       // ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(true);
                                             }
-                    ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(true);
+
                     ExoPlayerVideoHandler.getInstance().goToForeground();
                     ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
                 }
