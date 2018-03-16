@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.widget.AdapterView;
 import android.support.annotation.NonNull;
@@ -141,21 +142,21 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT &&  mContext != null) {
 
-            Intent intent = new Intent(mContext, RecipeStepDetailActivity.class);
+            Intent intent = new Intent(this,RecipeStepDetailActivity.class);
             intent.putExtra(RecipeStepDetailFragment.ARG_STEP, recipeStep);
             intent.putExtra(RecipeStepListActivity.TAG_RECIPE, recipe);
             intent.putParcelableArrayListExtra(RecipesMainFragment.TAG_RECIPES,recipes);
-            mContext.startActivity(intent);
+            startActivity(intent);
 
         }
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        /*if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
         {
             isTwoPane = true;
         }
-
+*/
         }
 
 }

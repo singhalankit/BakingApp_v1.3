@@ -87,8 +87,10 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }*/
             //     startFullscreen(currentPosition);
         //} else {
+        if (step != null) {
             checkPrevNext();
             changeFragment();
+        }
         //}
 
 
