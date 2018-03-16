@@ -73,6 +73,8 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
 
         if (mTwoPane ) {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+
+
         }
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE  && ! mTwoPane)
@@ -100,12 +102,16 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                 }
                 else {
                     stepVideoPlayer.setVisibility(View.VISIBLE);
-                    if(ExoPlayerVideoHandler.getInstance().getPlayer() != null)
+                    if(ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
                         stepVideoPlayer.setPlayer(ExoPlayerVideoHandler.getInstance().getPlayer());
-                    else
+
+                    }
+                    else {
                         ExoPlayerVideoHandler.getInstance()
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
+                                            }
+                    stepVideoPlayer.getPlayer().setPlayWhenReady(true);
                     ExoPlayerVideoHandler.getInstance().goToForeground();
                 }
             } else {
