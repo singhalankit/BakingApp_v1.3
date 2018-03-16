@@ -90,14 +90,16 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
 
     @Override
         protected void onSaveInstanceState(Bundle outState) {
-            outState.putParcelable(TAG_RECIPE, recipe);
+
             super.onSaveInstanceState(outState);
+        outState.putParcelable(TAG_RECIPE, recipe);
         }
 
         @Override
         protected void onRestoreInstanceState(Bundle savedInstanceState) {
-            recipe = savedInstanceState.getParcelable(TAG_RECIPE);
+
             super.onRestoreInstanceState(savedInstanceState);
+            recipe = savedInstanceState.getParcelable(TAG_RECIPE);
         }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {

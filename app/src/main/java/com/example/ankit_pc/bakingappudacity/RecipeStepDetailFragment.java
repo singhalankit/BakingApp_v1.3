@@ -107,15 +107,16 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                     stepVideoPlayer.setVisibility(View.VISIBLE);
                     if(ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
                         stepVideoPlayer.setPlayer(ExoPlayerVideoHandler.getInstance().getPlayer());
-                        //ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
+
                     }
                     else {
                         ExoPlayerVideoHandler.getInstance()
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
                                             }
-                    //stepVideoPlayer.getPlayer().setPlayWhenReady(true);
+                    ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(true);
                     ExoPlayerVideoHandler.getInstance().goToForeground();
+                    ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
                 }
             } else {
                 if(stepVideoPlayer != null) {
