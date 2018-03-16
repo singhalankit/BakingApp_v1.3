@@ -36,7 +36,7 @@ public class ExoPlayerVideoHandler {
     }
     private SimpleExoPlayer player;
     private Uri playerUri;
-    private boolean isPlayerPlaying;
+    private boolean isPlayerPlaying=true;
 
     private ExoPlayerVideoHandler(){}
 

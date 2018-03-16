@@ -111,7 +111,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
                                             }
-                    stepVideoPlayer.getPlayer().setPlayWhenReady(true);
+                    //stepVideoPlayer.getPlayer().setPlayWhenReady(true);
                     ExoPlayerVideoHandler.getInstance().goToForeground();
                 }
             } else {

@@ -152,11 +152,21 @@ public class RecipeStepListActivity extends AppCompatActivity implements OnClick
 
         }
 
-        /*if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE && mContext != null)
         {
-            isTwoPane = true;
+            Intent intent = new Intent(this, RecipeStepDetailActivity.class);
+            intent.putExtra(RecipeStepDetailFragment.ARG_STEP, recipeStep);
+            intent.putExtra(RecipeStepListActivity.TAG_RECIPE, recipe);
+            intent.putParcelableArrayListExtra(RecipesMainFragment.TAG_RECIPES,recipes);
+            startActivity(intent);
         }
-*/
+
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+
+        {
+            onCreate(null);
+        }
         }
 
 }

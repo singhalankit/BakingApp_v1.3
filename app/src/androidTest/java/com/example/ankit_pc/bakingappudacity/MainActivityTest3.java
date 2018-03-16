@@ -29,13 +29,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainActivityTest3 {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest() {
+    public void mainActivityTest3() {
         ViewInteraction appCompatTextView = onView(
                 allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
                         childAtPosition(
@@ -83,6 +83,16 @@ public class MainActivityTest {
                         isDisplayed()));
         appCompatButton2.perform(click());
 
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.nextButton), withText("Next Step"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        1),
+                                1),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
+
         ViewInteraction appCompatImageButton2 = onView(
                 allOf(withContentDescription("Navigate up"),
                         childAtPosition(
@@ -94,19 +104,16 @@ public class MainActivityTest {
                         isDisplayed()));
         appCompatImageButton2.perform(click());
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.include_recipe_step_list),
+        ViewInteraction appCompatImageButton3 = onView(
+                allOf(withContentDescription("Navigate up"),
                         childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(1, click()));
-
-        ViewInteraction recyclerView3 = onView(
-                allOf(withId(R.id.include_recipe_step_list),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                0)));
-        recyclerView3.perform(actionOnItemAtPosition(0, click()));
+                                allOf(withId(R.id.toolbar),
+                                        childAtPosition(
+                                                withId(R.id.app_bar),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton3.perform(click());
 
     }
 
