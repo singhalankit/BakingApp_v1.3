@@ -191,8 +191,10 @@ public class MainActivityTest  {
 
 
     public boolean isScreenSw600dp() {
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        //mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        displayMetrics = mActivity.getResources().getDisplayMetrics();
         float widthDp = displayMetrics.widthPixels / displayMetrics.density;
         float heightDp = displayMetrics.heightPixels / displayMetrics.density;
         float screenSw = Math.min(widthDp, heightDp);
