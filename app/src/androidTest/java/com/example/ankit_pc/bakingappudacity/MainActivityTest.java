@@ -1,6 +1,7 @@
 package com.example.ankit_pc.bakingappudacity;
 
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -31,28 +32,22 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
-    private MainActivity  mActivity;
+public class MainActivityTest  {
+    private MainActivity  mActivity ;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
 
-    @Before
-    private boolean isScreenSw600dp() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        float widthDp = displayMetrics.widthPixels / displayMetrics.density;
-        float heightDp = displayMetrics.heightPixels / displayMetrics.density;
-        float screenSw = Math.min(widthDp, heightDp);
-        return screenSw >= 600;
-    }
+
+
 
 
     @Test
     public void mainActivityTest() {
+        boolean mScreenWidth = isScreenSw600dp();
 
-        if (isScreenSw600dp()) {
+        if (mScreenWidth) {
 
             ViewInteraction appCompatTextView = onView(
                     allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
@@ -184,6 +179,18 @@ public class MainActivityTest {
 
     }
 
+
+
+    public boolean isScreenSw600dp() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        float widthDp = displayMetrics.widthPixels / displayMetrics.density;
+        float heightDp = displayMetrics.heightPixels / displayMetrics.density;
+        float screenSw = Math.min(widthDp, heightDp);
+        return screenSw >= 600;
+    }
+
+
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
@@ -202,4 +209,8 @@ public class MainActivityTest {
             }
         };
     }
+
+
+
+
 }
