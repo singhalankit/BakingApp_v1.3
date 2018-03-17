@@ -7,6 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -34,20 +35,27 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest  {
     private MainActivity  mActivity ;
+    boolean mScreenWidth;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
 
+    @Before
+    public void setmActivity (){
+        mActivity = mActivityTestRule.getActivity();
+         mScreenWidth = isScreenSw600dp();
 
+    }
 
 
 
     @Test
     public void mainActivityTest() {
-        boolean mScreenWidth = isScreenSw600dp();
 
         if (mScreenWidth) {
+
+            Log.v("Entered into tablet", (String.valueOf(mScreenWidth)));
 
             ViewInteraction appCompatTextView = onView(
                     allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
@@ -108,6 +116,7 @@ public class MainActivityTest  {
         }
 
         else {
+            Log.v("Entered into phone",String.valueOf(mScreenWidth));
 
             ViewInteraction appCompatTextView = onView(
                     allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
