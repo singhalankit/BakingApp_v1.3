@@ -145,6 +145,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     private void changeFragment(){
         Bundle arguments = new Bundle();
         arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
+        arguments.putLong("current",currentPosition);
         fragment = new RecipeStepDetailFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()

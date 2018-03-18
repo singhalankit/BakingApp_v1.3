@@ -68,6 +68,11 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
             }
         }
 
+        if (getArguments().containsKey("current"))
+        {
+            currentPosition = getArguments().getLong("current");
+        }
+
         ExoPlayerVideoHandler.getInstance().play();
 
     }
