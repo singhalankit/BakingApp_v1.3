@@ -233,7 +233,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+    }
 }

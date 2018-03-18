@@ -155,7 +155,13 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         ExoPlayerVideoHandler.getInstance().goToBackground();
     }
 
-   /* @Override
+    @Override
+    public void onStop() {
+        super.onStop();
+        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+
+    }
+    /* @Override
     public void onResume() {
         super.onResume();
 
