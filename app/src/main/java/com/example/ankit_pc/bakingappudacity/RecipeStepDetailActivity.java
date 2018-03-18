@@ -88,6 +88,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             //     startFullscreen(currentPosition);
         //} else {
         if (step != null) {
+            ExoPlayerVideoHandler.getInstance().play();
             checkPrevNext();
             changeFragment();
         }
@@ -187,7 +188,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @OnClick(R.id.previousButton)
     void previousStep(View view){
         step = prevStep;
+        currentPosition = 00;
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        ExoPlayerVideoHandler.getInstance().play();
         checkPrevNext();
         changeFragment();
     }
@@ -195,7 +198,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @OnClick(R.id.nextButton)
     void nextStep(View view){
         step = nextStep;
+        currentPosition = 00;
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        ExoPlayerVideoHandler.getInstance().play();
         checkPrevNext();
         changeFragment();
     }
@@ -237,5 +242,12 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        ExoPlayerVideoHandler.getInstance().goToBackground();
     }
 }
