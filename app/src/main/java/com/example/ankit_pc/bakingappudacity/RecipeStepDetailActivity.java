@@ -97,6 +97,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
 
     }
 
+/*
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -113,6 +114,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }
 
     }
+*/
 
 
     /* private void startFullscreen(long position){

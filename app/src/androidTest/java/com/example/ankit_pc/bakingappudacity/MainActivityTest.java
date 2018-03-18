@@ -118,70 +118,80 @@ public class MainActivityTest  {
         else {
             Log.v("Entered into phone",String.valueOf(mScreenWidth));
 
-            ViewInteraction appCompatTextView = onView(
-                    allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
-                            childAtPosition(
-                                    childAtPosition(
-                                            withClassName(is("android.support.v7.widget.CardView")),
-                                            1),
-                                    0),
-                            isDisplayed()));
+
+
+                ViewInteraction appCompatTextView = onView(
+                        allOf(withId(R.id.recipe_TextView), withText("Nutella Pie"),
+                                childAtPosition(
+                                        childAtPosition(
+                                                withClassName(is("android.support.v7.widget.CardView")),
+                                                1),
+                                        0),
+                                isDisplayed()));
 
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            appCompatTextView.perform(click());
+                appCompatTextView.perform(click());
 
-            ViewInteraction recyclerView = onView(
-                    allOf(withId(R.id.include_recipe_step_list),
-                            childAtPosition(
-                                    withClassName(is("android.widget.LinearLayout")),
-                                    0)));
+                ViewInteraction recyclerView = onView(
+                        allOf(withId(R.id.include_recipe_step_list),
+                                childAtPosition(
+                                        withId(R.id.frameLayout),
+                                        0)));
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            recyclerView.perform(actionOnItemAtPosition(0, click()));
+                recyclerView.perform(actionOnItemAtPosition(0, click()));
 
+                // Added a sleep statement to match the app's execution delay.
+                // The recommended way to handle such scenarios is to use Espresso idling resources:
+                // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-            ViewInteraction appCompatImageButton = onView(
-                    allOf(withContentDescription("Navigate up"),
-                            childAtPosition(
-                                    allOf(withId(R.id.detail_toolbar),
-                                            childAtPosition(
-                                                    withId(R.id.app_bar),
-                                                    0)),
-                                    1),
-                            isDisplayed()));
+                ViewInteraction appCompatImageButton = onView(
+                        allOf(withContentDescription("Navigate up"),
+                                childAtPosition(
+                                        allOf(withId(R.id.detail_toolbar),
+                                                childAtPosition(
+                                                        withId(R.id.toolbar_layout),
+                                                        0)),
+                                        1),
+                                isDisplayed()));
+
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            appCompatImageButton.perform(click());
+                appCompatImageButton.perform(click());
 
+                ViewInteraction appCompatImageButton2 = onView(
+                        allOf(withContentDescription("Navigate up"),
+                                childAtPosition(
+                                        allOf(withId(R.id.toolbar),
+                                                childAtPosition(
+                                                        withId(R.id.app_bar),
+                                                        0)),
+                                        1),
+                                isDisplayed()));
 
-            ViewInteraction appCompatImageButton2 = onView(
-                    allOf(withContentDescription("Navigate up"),
-                            childAtPosition(
-                                    allOf(withId(R.id.toolbar),
-                                            childAtPosition(
-                                                    withId(R.id.app_bar),
-                                                    0)),
-                                    1),
-                            isDisplayed()));
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            appCompatImageButton2.perform(click());
 
-
+                appCompatImageButton2.perform(click());
 
 
         }
