@@ -89,6 +89,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         //} else {
         if (step != null) {
             ExoPlayerVideoHandler.getInstance().play();
+            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
             checkPrevNext();
             changeFragment();
         }
@@ -244,10 +245,22 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
     }
 
-    @Override
+   /* @Override
     public void onPause() {
         super.onPause();
        // ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().goToBackground();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ExoPlayerVideoHandler.getInstance().getPlayer() != null)
+        {
+
+           // ExoPlayerVideoHandler.getInstance().play();
+            ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
+
+        }
+    }*/
 }
