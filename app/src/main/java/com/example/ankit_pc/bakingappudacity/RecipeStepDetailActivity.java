@@ -189,8 +189,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     void previousStep(View view){
         step = prevStep;
         currentPosition = 00;
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().play();
+        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         checkPrevNext();
         changeFragment();
     }
@@ -199,8 +199,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     void nextStep(View view){
         step = nextStep;
         currentPosition = 00;
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().play();
+        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         checkPrevNext();
         changeFragment();
     }
@@ -247,7 +247,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+       // ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().goToBackground();
     }
 }
