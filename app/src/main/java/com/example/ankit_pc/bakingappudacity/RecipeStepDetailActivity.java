@@ -8,12 +8,14 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 
@@ -91,8 +93,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             //     startFullscreen(currentPosition);
         //} else {
         if (step != null) {
-            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
-            ExoPlayerVideoHandler.getInstance().play();
+            //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+            //ExoPlayerVideoHandler.getInstance().play();
             checkPrevNext();
             changeFragment();
         }
@@ -217,8 +219,10 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
-        dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+        //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+        //dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+
+        Log.v("DetailonSaved",Long.toString(currentPosition));
         outState.putParcelable(RecipeStepListActivity.TAG_RECIPE, recipe);
         outState.putParcelableArrayList(RecipesMainFragment.TAG_RECIPES, recipes);
         outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
@@ -229,6 +233,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.v("EnteredinDetail","onRestoreInstanceState");
         step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
         recipes = savedInstanceState.getParcelableArrayList(RecipesMainFragment.TAG_RECIPES);
         recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
@@ -251,28 +256,44 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
+
+        Log.v("EnteredinDetail","onStop");
+        if(Util.SDK_INT > 23) {
+            Log.v("EnteredinDetail","SDK greater than 23");
+            currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+            dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        }
         super.onStop();
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
     }
 
-/*    @Override
+    @Override
     public void onPause() {
         super.onPause();
-       // ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
-        ExoPlayerVideoHandler.getInstance().goToBackground();
-    }*/
+        Log.v("EnteredinDetail", "onPause");
+        if(Util.SDK_INT <= 23)
+        {
+            Log.v("EnteredinDetail","SDK less than 23");
+            currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+            Log.v("DetailonPause",Long.toString(currentPosition));
+            dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+           // Log.v("On PauseCurrent",Long.toString(currentPosition));
+            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (ExoPlayerVideoHandler.getInstance().getPlayer() != null)
-        {
 
+        if(Util.SDK_INT <= 23 ) {
 
-            ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
-            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(dplayWhenReady);
-
+            Log.v("DetailonResume", Long.toString(currentPosition));
+            checkPrevNext();
+            changeFragment();
         }
+
+
     }
 }
