@@ -36,6 +36,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     SimpleExoPlayerView stepVideoPlayer;
     long currentPosition=00;
     boolean mTwoPane;
+    boolean playWhenReady = true;
 
 
     public RecipeStepDetailFragment() {
@@ -47,8 +48,10 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         super.onSaveInstanceState(outState);
 
         currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+        playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
         outState.putLong("current",currentPosition);
         outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
+        outState.putBoolean("ready",playWhenReady);
 
     }
 
@@ -57,7 +60,9 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
         currentPosition = savedInstanceState.getLong("current");
-        step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);}
+        step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
+        playWhenReady = savedInstanceState.getBoolean("ready");
+        }
 
         if (getArguments().containsKey(ARG_STEP)) {
             step = getArguments().getParcelable(ARG_STEP);
@@ -73,6 +78,11 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
             currentPosition = getArguments().getLong("current");
         }
 
+        if(getArguments().containsKey("state"))
+        {
+            playWhenReady = getArguments().getBoolean("state");
+        }
+
         ExoPlayerVideoHandler.getInstance().play();
 
     }
@@ -83,7 +93,9 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         ButterKnife.bind(this,rootView);
 
         if (savedInstanceState != null){
-            currentPosition = savedInstanceState.getLong("current");}
+            currentPosition = savedInstanceState.getLong("current");
+            playWhenReady = savedInstanceState.getBoolean("ready");
+        }
 
         if (mTwoPane ) {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
@@ -121,10 +133,12 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
                        // ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(true);
-                                            }
+                       // ExoPlayerVideoHandler.getInstance().play();
 
-                    ExoPlayerVideoHandler.getInstance().goToForeground();
+                      ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);                      }
+                    //ExoPlayerVideoHandler.getInstance().play();
                     ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
+
                 }
             } else {
                 if(stepVideoPlayer != null) {
@@ -148,12 +162,12 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    @Override
+/*    @Override
     public void onPause() {
         super.onPause();
         //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().goToBackground();
-    }
+    }*/
 
     @Override
     public void onStop() {
@@ -164,7 +178,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     /* @Override
     public void onResume() {
         super.onResume();
-
+        ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
         ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
     }*/
 }
