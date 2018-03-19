@@ -48,13 +48,15 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+
         Log.v("EnteredinDetailFragment","onSavedInstance");
-        currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
-        playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
-        outState.putLong("current",currentPosition);
+        //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+        //playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+        //outState.putLong("current",currentPosition);
         outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
-        outState.putBoolean("ready",playWhenReady);
+        super.onSaveInstanceState(outState);
+        Log.v("On SavedInstanceCurrent",Long.toString(currentPosition));
+        //outState.putBoolean("ready",playWhenReady);
 
     }
 
@@ -62,10 +64,11 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v("EnteredinDetailFragment","onCreate");
+        Log.v("On JustCreateCurrent",Long.toString(currentPosition));
         if (savedInstanceState != null){
-        currentPosition = savedInstanceState.getLong("current");
+       // currentPosition = savedInstanceState.getLong("current");
         step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
-        playWhenReady = savedInstanceState.getBoolean("ready");
+        //playWhenReady = savedInstanceState.getBoolean("ready");
         }
 
         if (getArguments().containsKey(ARG_STEP)) {
@@ -77,10 +80,13 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
             }
         }
 
+
         if (getArguments().containsKey("current"))
         {
             currentPosition = getArguments().getLong("current");
         }
+
+
 
         if(getArguments().containsKey("state"))
         {
@@ -88,6 +94,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
 
         ExoPlayerVideoHandler.getInstance().play();
+        Log.v("On CreateCurrent",Long.toString(currentPosition));
 
     }
 
@@ -96,10 +103,10 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         View rootView = inflater.inflate(R.layout.recipe_step_detail_fragment, container, false);
         ButterKnife.bind(this,rootView);
         Log.v("EnteredinDetailFragment","onCreateView");
-        if (savedInstanceState != null){
+        /*if (savedInstanceState != null){
             currentPosition = savedInstanceState.getLong("current");
             playWhenReady = savedInstanceState.getBoolean("ready");
-        }
+        }*/
 
         if (mTwoPane ) {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
@@ -113,6 +120,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
 
 
         fillUI(rootView,currentPosition);
+        Log.v("On CreateViewCurrent",Long.toString(currentPosition));
         return rootView;
     }
 
@@ -136,6 +144,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                         ExoPlayerVideoHandler.getInstance()
                                 .prepareExoPlayerForUri(view.getContext(),
                                         Uri.parse(step.getVideoURL()), stepVideoPlayer);
+                    }
                        // ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(true);
                        // ExoPlayerVideoHandler.getInstance().play();
 
@@ -143,7 +152,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                     //ExoPlayerVideoHandler.getInstance().play();
                     ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(position);
 
-                }
+
             } else {
                 if(stepVideoPlayer != null) {
                     stepVideoPlayer.setVisibility(View.GONE);
@@ -183,7 +192,9 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         super.onStop();
         Log.v("EnteredinDetailFragment","onStop");
         if(Util.SDK_INT > 23) {
-            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(false);
+            Log.v("EnteredinDetailFragment","SDK greater than 23");
+            currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+            playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
     }
@@ -192,9 +203,13 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        Log.v("EnteredinDetailFragment", "onPause");
         if(Util.SDK_INT <= 23)
         {
-            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(false);
+            Log.v("EnteredinDetailFragment","SDK less than 23");
+            currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
+            playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
+            Log.v("On PauseCurrent",Long.toString(currentPosition));
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
     }
@@ -202,6 +217,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.v("EnteredinDetailFragment", "onStart");
         if(Util.SDK_INT > 23) {
             stepVideoPlayer.setVisibility(View.VISIBLE);
             Log.v("EnteredinDetailFragment", Long.toString(currentPosition));
@@ -225,9 +241,10 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.v("EnteredinDetailFragment", "onResume");
         if(Util.SDK_INT <= 23 ) {
             stepVideoPlayer.setVisibility(View.VISIBLE);
-            Log.v("EnteredinDetailFragment", "onResume");
+            //Log.v("EnteredinDetailFragment", "onResume");
             if (ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
                 //  ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
                 Log.v("EnteredinDetailFragment", "player not null");
@@ -239,22 +256,22 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
                         .prepareExoPlayerForUri(getActivity(),
                                 Uri.parse(step.getVideoURL()), stepVideoPlayer);
             }
-
+            Log.v("On ResumeCurrent",Long.toString(currentPosition));
             ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
             ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
         }
     }
 
-    @Override
+/*    @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         Log.v("EnteredinDetailFragment","onViewStateRestored");
         if (savedInstanceState != null) {
             step = savedInstanceState.getParcelable(ARG_STEP);
-            currentPosition = savedInstanceState.getLong("current");
-            playWhenReady = savedInstanceState.getBoolean("ready");
+            //currentPosition = savedInstanceState.getLong("current");
+            //playWhenReady = savedInstanceState.getBoolean("ready");
         }
-    }
+    }*/
 
     /* @Override
     public void onResume() {
