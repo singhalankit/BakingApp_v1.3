@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +49,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        Log.v("EnteredinDetailFragment","onSavedInstance");
         currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
         playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
         outState.putLong("current",currentPosition);
@@ -58,6 +61,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("EnteredinDetailFragment","onCreate");
         if (savedInstanceState != null){
         currentPosition = savedInstanceState.getLong("current");
         step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
@@ -91,7 +95,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recipe_step_detail_fragment, container, false);
         ButterKnife.bind(this,rootView);
-
+        Log.v("EnteredinDetailFragment","onCreateView");
         if (savedInstanceState != null){
             currentPosition = savedInstanceState.getLong("current");
             playWhenReady = savedInstanceState.getBoolean("ready");
@@ -162,23 +166,103 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
     }
 
-/*    @Override
+  /*  @Override
     public void onPause() {
         super.onPause();
+        if (ExoPlayerVideoHandler.getInstance().getPlayer() != null)
+        {
+            //playWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
         //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         ExoPlayerVideoHandler.getInstance().goToBackground();
+       // ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        }
     }*/
 
     @Override
     public void onStop() {
         super.onStop();
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
-
+        Log.v("EnteredinDetailFragment","onStop");
+        if(Util.SDK_INT > 23) {
+            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(false);
+            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        }
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(Util.SDK_INT <= 23)
+        {
+            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(false);
+            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(Util.SDK_INT > 23) {
+            stepVideoPlayer.setVisibility(View.VISIBLE);
+            Log.v("EnteredinDetailFragment", Long.toString(currentPosition));
+            if (ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
+                //  ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+                Log.v("EnteredinDetailFragment", "player not null");
+                stepVideoPlayer.setPlayer(ExoPlayerVideoHandler.getInstance().getPlayer());
+
+            } else {
+                Log.v("EnteredinDetailFragment", "player is null");
+                ExoPlayerVideoHandler.getInstance()
+                        .prepareExoPlayerForUri(getActivity(),
+                                Uri.parse(step.getVideoURL()), stepVideoPlayer);
+            }
+
+            ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
+            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(Util.SDK_INT <= 23 ) {
+            stepVideoPlayer.setVisibility(View.VISIBLE);
+            Log.v("EnteredinDetailFragment", "onResume");
+            if (ExoPlayerVideoHandler.getInstance().getPlayer() != null) {
+                //  ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+                Log.v("EnteredinDetailFragment", "player not null");
+                stepVideoPlayer.setPlayer(ExoPlayerVideoHandler.getInstance().getPlayer());
+
+            } else {
+                Log.v("EnteredinDetailFragment", "player is null");
+                ExoPlayerVideoHandler.getInstance()
+                        .prepareExoPlayerForUri(getActivity(),
+                                Uri.parse(step.getVideoURL()), stepVideoPlayer);
+            }
+
+            ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
+            ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.v("EnteredinDetailFragment","onViewStateRestored");
+        if (savedInstanceState != null) {
+            step = savedInstanceState.getParcelable(ARG_STEP);
+            currentPosition = savedInstanceState.getLong("current");
+            playWhenReady = savedInstanceState.getBoolean("ready");
+        }
+    }
+
     /* @Override
     public void onResume() {
         super.onResume();
-        ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
+        if (ExoPlayerVideoHandler.getInstance().getPlayer() != null)
+        {
+        //ExoPlayerVideoHandler.getInstance().getPlayer().setPlayWhenReady(playWhenReady);
         ExoPlayerVideoHandler.getInstance().getPlayer().seekTo(currentPosition);
+        }
     }*/
 }
