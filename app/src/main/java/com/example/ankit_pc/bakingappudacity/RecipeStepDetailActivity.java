@@ -53,6 +53,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("EnteredinDetail","onCreate");
         setContentView(R.layout.recipe_step_detail_activity);
         ButterKnife.bind(this);
 
@@ -81,9 +82,12 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             if (intent.hasExtra(RecipeStepDetailFragment.ARG_STEP))
                 step = getIntent().getParcelableExtra(RecipeStepDetailFragment.ARG_STEP);
         } else {
+            Log.v("EnteredinDetail","SavedInstancehasvalue in onCreate");
             step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
-           // recipes = savedInstanceState.getParcelableArrayList(RecipesMainFragment.TAG_RECIPES);
-            //recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
+            recipes = savedInstanceState.getParcelableArrayList(RecipesMainFragment.TAG_RECIPES);
+            recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
+           // currentPosition = savedInstanceState.getLong("current");
+            //dplayWhenReady = savedInstanceState.getBoolean("state");
         }
 
 
@@ -94,6 +98,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }*/
             //     startFullscreen(currentPosition);
         //} else {
+        Log.v("Detailcurrent",Long.toString(currentPosition));
+
         if (step != null) {
             //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
             //ExoPlayerVideoHandler.getInstance().play();
@@ -200,7 +206,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         step = prevStep;
         //currentPosition = 00;
         //dplayWhenReady = true;
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
        // ExoPlayerVideoHandler.getInstance().play();
         //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
         checkPrevNext();
@@ -212,26 +218,26 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         step = nextStep;
         //currentPosition = 00;
         //dplayWhenReady = true;
-        ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+        //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
        // ExoPlayerVideoHandler.getInstance().play();
         //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
         checkPrevNext();
         changeFragment();
     }
 
-    @Override
+/*    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
         //dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
-
-        Log.v("DetailonSaved",Long.toString(currentPosition));
+        Log.v("EnteredinDetail","onSavedInstance");
+        Log.v("DetailCurrentonSaved",Long.toString(currentPosition));
         outState.putParcelable(RecipeStepListActivity.TAG_RECIPE, recipe);
         outState.putParcelableArrayList(RecipesMainFragment.TAG_RECIPES, recipes);
         outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
-        //outState.putBoolean("state",dplayWhenReady);
-        //outState.putLong("current",currentPosition);
-    }
+        outState.putBoolean("state",dplayWhenReady);
+        outState.putLong("current",currentPosition);
+    }*/
 
 /*    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -271,7 +277,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         super.onStop();
     }*/
 
-  /*  @Override
+/*    @Override
     public void onPause() {
         super.onPause();
         Log.v("EnteredinDetail", "onPause");
@@ -282,7 +288,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             Log.v("EnteredinDetailPause",Long.toString(currentPosition));
             dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
            // Log.v("On PauseCurrent",Long.toString(currentPosition));
-            ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
+            //ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
     }*/
 

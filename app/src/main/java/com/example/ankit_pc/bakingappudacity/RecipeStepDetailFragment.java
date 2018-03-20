@@ -72,6 +72,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         playWhenReady = savedInstanceState.getBoolean("ready");
         }
 
+
         if (getArguments().containsKey(ARG_STEP)) {
             step = getArguments().getParcelable(ARG_STEP);
             mTwoPane = getArguments().getBoolean("pane");
@@ -82,7 +83,8 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
 
 
-        /*if (getArguments().containsKey("current"))
+
+       /* if (getArguments().containsKey("current"))
         {
             currentPosition = getArguments().getLong("current");
         }
