@@ -45,8 +45,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.nextButton)  Button nextButton;
    // SimpleExoPlayerView viewExoPlayer;
-    long currentPosition;
+    long currentPosition=00;
     boolean dplayWhenReady = true;
+    boolean twoPane=false;
 
 
     @Override
@@ -58,10 +59,11 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
        // viewExoPlayer = (SimpleExoPlayerView) findViewById(R.id.videoPlayerFullscreen);
-        if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getLong("current");
-            dplayWhenReady = savedInstanceState.getBoolean("state");
-        }
+       /* if (savedInstanceState != null) {
+           // currentPosition = savedInstanceState.getLong("current");
+            //dplayWhenReady = savedInstanceState.getBoolean("ready");
+            step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
+        }*/
         //prevButton = (Button) findViewById(R.id.previousButton);
         //nextButton = (Button) findViewById(R.id.nextButton);
 
@@ -80,8 +82,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
                 step = getIntent().getParcelableExtra(RecipeStepDetailFragment.ARG_STEP);
         } else {
             step = savedInstanceState.getParcelable(RecipeStepDetailFragment.ARG_STEP);
-            recipes = savedInstanceState.getParcelableArrayList(RecipesMainFragment.TAG_RECIPES);
-            recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
+           // recipes = savedInstanceState.getParcelableArrayList(RecipesMainFragment.TAG_RECIPES);
+            //recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
         }
 
 
@@ -152,8 +154,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     private void changeFragment(){
         Bundle arguments = new Bundle();
         arguments.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
-        arguments.putLong("current",currentPosition);
-        arguments.putBoolean("state",dplayWhenReady);
+        arguments.putBoolean("pane",twoPane);
+        //arguments.putLong("current",currentPosition);
+        //arguments.putBoolean("state",dplayWhenReady);
         fragment = new RecipeStepDetailFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
@@ -195,8 +198,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @OnClick(R.id.previousButton)
     void previousStep(View view){
         step = prevStep;
-        currentPosition = 00;
-        dplayWhenReady = true;
+        //currentPosition = 00;
+        //dplayWhenReady = true;
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
        // ExoPlayerVideoHandler.getInstance().play();
         //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
@@ -207,8 +210,8 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @OnClick(R.id.nextButton)
     void nextStep(View view){
         step = nextStep;
-        currentPosition = 00;
-        dplayWhenReady = true;
+        //currentPosition = 00;
+        //dplayWhenReady = true;
         ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
        // ExoPlayerVideoHandler.getInstance().play();
         //currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
@@ -226,11 +229,11 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         outState.putParcelable(RecipeStepListActivity.TAG_RECIPE, recipe);
         outState.putParcelableArrayList(RecipesMainFragment.TAG_RECIPES, recipes);
         outState.putParcelable(RecipeStepDetailFragment.ARG_STEP, step);
-        outState.putBoolean("state",dplayWhenReady);
-        outState.putLong("current",currentPosition);
+        //outState.putBoolean("state",dplayWhenReady);
+        //outState.putLong("current",currentPosition);
     }
 
-    @Override
+/*    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.v("EnteredinDetail","onRestoreInstanceState");
@@ -239,7 +242,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         recipe = savedInstanceState.getParcelable(RecipeStepListActivity.TAG_RECIPE);
         currentPosition = savedInstanceState.getLong("current");
         dplayWhenReady = savedInstanceState.getBoolean("state");
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -254,7 +257,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @Override
     public void onStop() {
 
@@ -266,9 +269,9 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
         super.onStop();
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void onPause() {
         super.onPause();
         Log.v("EnteredinDetail", "onPause");
@@ -276,14 +279,14 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         {
             Log.v("EnteredinDetail","SDK less than 23");
             currentPosition = ExoPlayerVideoHandler.getInstance().getPlayer().getCurrentPosition();
-            Log.v("DetailonPause",Long.toString(currentPosition));
+            Log.v("EnteredinDetailPause",Long.toString(currentPosition));
             dplayWhenReady = ExoPlayerVideoHandler.getInstance().getPlayer().getPlayWhenReady();
            // Log.v("On PauseCurrent",Long.toString(currentPosition));
             ExoPlayerVideoHandler.getInstance().releaseVideoPlayer();
         }
-    }
+    }*/
 
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
 
@@ -295,5 +298,5 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 }

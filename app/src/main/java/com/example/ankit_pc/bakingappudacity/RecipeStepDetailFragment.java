@@ -82,7 +82,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         }
 
 
-        if (getArguments().containsKey("current"))
+        /*if (getArguments().containsKey("current"))
         {
             currentPosition = getArguments().getLong("current");
         }
@@ -92,7 +92,7 @@ public class RecipeStepDetailFragment extends android.support.v4.app.Fragment {
         if(getArguments().containsKey("state"))
         {
             playWhenReady = getArguments().getBoolean("state");
-        }
+        }*/
 
         ExoPlayerVideoHandler.getInstance().play();
         Log.v("On CreateCurrent",Long.toString(currentPosition));
